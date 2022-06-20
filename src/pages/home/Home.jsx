@@ -1,17 +1,14 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useContext } from 'react';
+
+import { ACTIONS, MyContext } from '../../context/context';
 import useFetchUser from '../../hooks/use-fetchUser';
-import { decrement, increment } from '../../store/count-slice';
 
 function Home() {
-  // setter
-  const dispatch = useDispatch();
-
-  // getter
-  const { value } = useSelector((state) => state.count);
-  const { token } = useSelector((state) => state.login);
+  const { state, dispatch } = useContext(MyContext);
 
   const { fetchUser } = useFetchUser();
+
+  console.log(state);
 
   return (
     <>
@@ -19,12 +16,18 @@ function Home() {
         <title>Home Function</title>
       </head>
       <div className="App-header">
-        <div>{token}</div>
-        <button type="button" onClick={() => dispatch(increment())}>
+        <p>{state.login.username}</p>
+        <button
+          type="button"
+          onClick={() => dispatch({ type: ACTIONS.INCREMENT })}
+        >
           +
         </button>
-        <p>{value}</p>
-        <button type="button" onClick={() => dispatch(decrement())}>
+        <p>{state.count.value}</p>
+        <button
+          type="button"
+          onClick={() => dispatch({ type: ACTIONS.DECREMENT })}
+        >
           -
         </button>
         <button type="button" onClick={() => fetchUser()}>

@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
-import { Provider, useSelector } from 'react-redux';
+import React from 'react';
+import { Provider } from 'react-redux';
 import './App.css';
+import { ContextProvider } from './context/context';
 
 import AppRoutes from './routes/AppRoutes';
 
@@ -8,9 +9,11 @@ import { store } from './store/Store';
 
 function App() {
   return (
-    <Provider store={store}>
-      <AppRoutes />
-    </Provider>
+    <ContextProvider>
+      <Provider store={store}>
+        <AppRoutes />
+      </Provider>
+    </ContextProvider>
   );
 }
 

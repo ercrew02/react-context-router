@@ -1,11 +1,13 @@
-import { useSelector } from 'react-redux';
+import { useContext } from 'react';
+
 import { Navigate, Outlet } from 'react-router-dom';
+import { MyContext } from '../context/context';
 
 function PublicRoutes() {
-  const { token } = useSelector((state) => state.login);
+  const { state } = useContext(MyContext);
 
   const useAuth = () => {
-    if (token) {
+    if (state.login.token) {
       return true;
     }
     return false;

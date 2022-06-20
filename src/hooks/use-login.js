@@ -1,11 +1,9 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { setUser } from '../store/fetchUser-slice';
-import { setToken, setUsername } from '../store/login-slice';
+import { ACTIONS, MyContext } from '../context/context';
 
 function useLogin() {
-  const dispatch = useDispatch();
+  const { dispatch } = useContext(MyContext);
   const navigate = useNavigate();
 
   const authLogin = async (e, username, password) => {
@@ -20,8 +18,14 @@ function useLogin() {
       }
     );
     const data = await response.json();
-    dispatch(setToken(data.token));
-    dispatch(setUsername(data.username));
+    dispatch({
+      type: ACTIONS.LOGIN,
+      payload: {
+        username: data.username,
+        token: data.token,
+      },
+    });
+
     navigate('/');
   };
 
